@@ -11,6 +11,6 @@ public interface IpacientesDAO {
     pacientesMODEL update(pacientesMODEL pacientes);
     void delete(Long id);
     List<pacientesMODEL> findAll();
-    Optional<pacientesMODEL> findById(Long id);
+    Optional<pacientesMODEL> findByCpf(String cpfPaciente);
 
 }

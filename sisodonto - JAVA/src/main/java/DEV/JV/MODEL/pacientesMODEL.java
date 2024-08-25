@@ -7,6 +7,17 @@ public class pacientesMODEL {
     private String cpfPaciente, nomePaciente, sexo, cep, endereco, telefone, email;
     private LocalDate nascimento;
 
+    public pacientesMODEL(String cpfPaciente, String nomePaciente, LocalDate nascimento, String sexo, String cep, String endereco, String telefone, String email) {
+        this.cpfPaciente = cpfPaciente;
+        this.nomePaciente = nomePaciente;
+        this.sexo = sexo;
+        this.cep = cep;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.email = email;
+        this.nascimento = nascimento;
+    }
+
     public String getCpfPaciente() {
         return cpfPaciente;
     }
