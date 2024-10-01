@@ -41,7 +41,28 @@ public class pacientesDAO implements IpacientesDAO {
 
     @Override
     public pacientesMODEL update(pacientesMODEL pacientes) {
-        return null;
+
+        try (Connection connection = ConnectionFactory.getConnection()){
+            String sql = "UPDATE pacientes SET cpfPaciente = ?, nomePaciente = ?, nascimento = ?, sexo = ?, cep = ?" +
+                         ", endereço = ?, telefone = ?, email = ? WHERE cpfPaciente = ?;";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, pacientes.getCpfPaciente());
+            preparedStatement.setString(2, pacientes.getNomePaciente());
+            preparedStatement.setDate(3, java.sql.Date.valueOf(pacientes.getNascimento()));
+            preparedStatement.setString(4, pacientes.getSexo());
+            preparedStatement.setString(5, pacientes.getCep());
+            preparedStatement.setString(6, pacientes.getEndereco());
+            preparedStatement.setString(7, pacientes.getTelefone());
+            preparedStatement.setString(8, pacientes.getEmail());
+            preparedStatement.setString(9, pacientes.getCpfPaciente());
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return pacientes;
     }
 
     @Override
