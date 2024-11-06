@@ -66,8 +66,18 @@ public class pacientesDAO implements IpacientesDAO {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String cpfPaciente) {
 
+        try (Connection connection = ConnectionFactory.getConnection()){
+            String sql = "DELETE FROM pacientes WHERE cpfPaciente = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, cpfPaciente);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override

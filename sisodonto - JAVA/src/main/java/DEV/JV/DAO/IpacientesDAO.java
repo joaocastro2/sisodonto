@@ -9,7 +9,7 @@ public interface IpacientesDAO {
 
     pacientesMODEL save(pacientesMODEL pacientes);
     pacientesMODEL update(pacientesMODEL pacientes);
-    void delete(Long id);
+    void delete(String cpfPaciente);
     List<pacientesMODEL> findAll();
     Optional<pacientesMODEL> findByCpf(String cpfPaciente);
 
