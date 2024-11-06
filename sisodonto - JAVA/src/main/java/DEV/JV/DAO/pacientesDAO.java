@@ -14,6 +14,10 @@ import java.util.Optional;
 
 public class pacientesDAO implements IpacientesDAO {
 
+    public pacientesDAO() {
+
+    }
+
     @Override
     public pacientesMODEL save(pacientesMODEL pacientes) {
 

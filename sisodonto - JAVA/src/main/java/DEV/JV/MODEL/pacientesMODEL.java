@@ -7,6 +7,9 @@ public class pacientesMODEL {
     private String cpfPaciente, nomePaciente, sexo, cep, endereco, telefone, email;
     private LocalDate nascimento;
 
+    public pacientesMODEL() {
+    }
+
     public pacientesMODEL(String cpfPaciente, String nomePaciente, LocalDate nascimento, String sexo, String cep, String endereco, String telefone, String email) {
         this.cpfPaciente = cpfPaciente;
         this.nomePaciente = nomePaciente;
