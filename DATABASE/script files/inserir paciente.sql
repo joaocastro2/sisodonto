@@ -7,3 +7,4 @@ insert into pacientes values ('Cpf do paciente', 'Nome do paciente', 'Data de na
 -- adiciona um ou mais funcionários na empresa
 insert into pacientes values ('Cpf do paciente', 'Nome do paciente', 'Data de nascimento', 'sexo', 'cep', 'endereço', 'telefone', 'email');
 
+select * from pacientes;

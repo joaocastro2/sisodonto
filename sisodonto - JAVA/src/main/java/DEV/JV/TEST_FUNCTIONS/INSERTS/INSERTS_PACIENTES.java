@@ -10,5 +10,7 @@ public class INSERTS_PACIENTES {
         //                                               "", "", "");
         //
         //insertPac.save(pacientes);
+        //teste
     }
 }
+
