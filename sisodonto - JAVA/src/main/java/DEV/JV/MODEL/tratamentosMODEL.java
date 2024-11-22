@@ -4,28 +4,22 @@ import DEV.JV.CLASSES_ENUM.tiposTratamento;
 
 public class tratamentosMODEL {
 
-    private int idTratamento;
-    private tiposTratamento tiposTratamento;
+    private tiposTratamento categoriaTratamento;
     private String descricao;
-    private float custo;
+    private Double custo;
 
-    public tratamentosMODEL(int idTratamento, tiposTratamento tratamento, String descricao, float custo) {
-        this.idTratamento = idTratamento;
-        this.tiposTratamento = tratamento;
+    public tratamentosMODEL(tiposTratamento tratamento, String descricao, Double custo) {
+        this.categoriaTratamento = tratamento;
         this.descricao = descricao;
         this.custo = custo;
     }
 
-    public int getIdTratamento() {
-        return idTratamento;
+    public tiposTratamento getCategoriaTratamento() {
+        return categoriaTratamento;
     }
 
-    public tiposTratamento getTiposTratamento() {
-        return tiposTratamento;
-    }
-
-    public void setTiposTratamento(tiposTratamento tiposTratamento) {
-        this.tiposTratamento = tiposTratamento;
+    public void setCategoriaTratamento(tiposTratamento categoriaTratamento) {
+        this.categoriaTratamento = categoriaTratamento;
     }
 
     public String getDescricao() {
@@ -36,15 +30,11 @@ public class tratamentosMODEL {
         this.descricao = descricao;
     }
 
-    public float getCusto() {
+    public Double getCusto() {
         return custo;
     }
 
-    public void setCusto(float custo) {
+    public void setCusto(Double custo) {
         this.custo = custo;
-    }
-
-    public void setIdTratamento(int idTratamento) {
-        this.idTratamento = idTratamento;
     }
 }
