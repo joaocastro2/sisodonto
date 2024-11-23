@@ -9,7 +9,8 @@ public class INSERTS_TRATAMENTS {
     public static void main(String[] args) {
         tratamentosDAO dao = new tratamentosDAO();
 
-        tratamentosMODEL tratamentos = new tratamentosMODEL(tiposTratamento.MANUTENCAO, "30min, troca de aparelho ", 120.0);
+        tratamentosMODEL tratamentos = new tratamentosMODEL(tiposTratamento.MANUTENCAO, "30min, manutenção simples", 80.0);
+
         dao.save(tratamentos);
     }
 }
