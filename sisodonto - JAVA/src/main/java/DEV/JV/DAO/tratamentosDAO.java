@@ -1,9 +1,11 @@
 package DEV.JV.DAO;
 
+import DEV.JV.CLASSES_ENUM.tiposTratamento;
 import DEV.JV.INFRA.ConnectionFactory;
 import DEV.JV.MODEL.tratamentosMODEL;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +46,31 @@ public class tratamentosDAO implements ItratamentosDAO{
     }
 
     @Override
-    public List<tratamentosMODEL> findALL() {
-        return List.of();
+    public List<tratamentosMODEL> findAll() {
+        String sql = "SELECT * FROM tratamentos";
+
+        List <tratamentosMODEL> tratamentos = new ArrayList<>();
+
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while(rs.next()){
+                Long idTratamento = rs.getLong("idTratamento");
+                tiposTratamento categoriaTratamento = tiposTratamento.valueOf(rs.getString("categoriaTratamento"));
+                String descricao = rs.getString("descricao");
+                Double custo = rs.getDouble("custo");
+
+                tratamentosMODEL tratamento = new tratamentosMODEL(idTratamento, categoriaTratamento, descricao, custo);
+                tratamentos.add(tratamento);
+
+            }
+
+        } catch(SQLException ex) {
+            throw new RuntimeException();
+        }
+        return tratamentos;
     }
 
     @Override

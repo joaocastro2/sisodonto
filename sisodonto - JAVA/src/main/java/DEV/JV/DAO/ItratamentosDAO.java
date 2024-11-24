@@ -10,7 +10,7 @@ public interface ItratamentosDAO {
     tratamentosMODEL save (tratamentosMODEL tratamentos);
     tratamentosMODEL update (tratamentosMODEL tratamentos);
     void delete (int idTratamento);
-    List<tratamentosMODEL> findALL();
+    List<tratamentosMODEL> findAll();
     Optional<tratamentosMODEL> findById (int idTratamento);
 
 }
