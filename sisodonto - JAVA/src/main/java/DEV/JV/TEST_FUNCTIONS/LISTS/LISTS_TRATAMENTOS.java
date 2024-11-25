@@ -21,5 +21,4 @@ public class LISTS_TRATAMENTOS {
             System.out.println("======================================================");
         }
     }
-
 }

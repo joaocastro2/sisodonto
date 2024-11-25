@@ -2,9 +2,11 @@ package DEV.JV.DAO;
 
 import DEV.JV.CLASSES_ENUM.tiposTratamento;
 import DEV.JV.INFRA.ConnectionFactory;
+import DEV.JV.MODEL.pacientesMODEL;
 import DEV.JV.MODEL.tratamentosMODEL;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,15 +20,12 @@ public class tratamentosDAO implements ItratamentosDAO{
             String sql = "INSERT INTO  tratamentos (categoriaTratamento, descricao, Custo)" +
                                                      "VALUES (?, ?, ?)";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, tratamentos.getCategoriaTratamento().toString());
             preparedStatement.setString(2, tratamentos.getDescricao());
             preparedStatement.setDouble(3, tratamentos.getCusto());
 
             preparedStatement.executeUpdate();
-
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            resultSet.next();
 
         } catch (SQLException ex){
             throw new RuntimeException();
@@ -49,14 +48,14 @@ public class tratamentosDAO implements ItratamentosDAO{
     public List<tratamentosMODEL> findAll() {
         String sql = "SELECT * FROM tratamentos";
 
-        List <tratamentosMODEL> tratamentos = new ArrayList<>();
+        List<tratamentosMODEL> tratamentos = new ArrayList<>();
 
         try (Connection connection = ConnectionFactory.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             ResultSet rs = preparedStatement.executeQuery();
 
-            while(rs.next()){
+            while (rs.next()) {
                 Long idTratamento = rs.getLong("idTratamento");
                 tiposTratamento categoriaTratamento = tiposTratamento.valueOf(rs.getString("categoriaTratamento"));
                 String descricao = rs.getString("descricao");
@@ -67,8 +66,8 @@ public class tratamentosDAO implements ItratamentosDAO{
 
             }
 
-        } catch(SQLException ex) {
-            throw new RuntimeException();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
         return tratamentos;
     }

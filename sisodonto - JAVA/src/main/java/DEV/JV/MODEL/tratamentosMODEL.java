@@ -10,11 +10,16 @@ public class tratamentosMODEL {
     private Double custo;
 
     public tratamentosMODEL(Long idTratamento, tiposTratamento categoriaTratamento, String descricao, Double custo) {
+        this.idTratamento = idTratamento;
+        this.categoriaTratamento = categoriaTratamento;
+        this.descricao = descricao;
+        this.custo = custo;
     }
 
-    public Long getIdTratamento() {
+    public Long getIdTratamento() {;
         return idTratamento;
     }
+
 
     public tiposTratamento getCategoriaTratamento() {
         return categoriaTratamento;
