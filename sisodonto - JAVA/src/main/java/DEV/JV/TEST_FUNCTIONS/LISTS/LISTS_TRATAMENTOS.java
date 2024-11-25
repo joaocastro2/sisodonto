@@ -12,7 +12,7 @@ public class LISTS_TRATAMENTOS {
         tratamentosDAO dao = new tratamentosDAO();
         List<tratamentosMODEL> tratamentos = dao.findAll();
 
-        for (tratamentosMODEL tournaments : tratamentos) {
+       for (tratamentosMODEL tournaments : tratamentos) {
             System.out.println("ID: " + tournaments.getIdTratamento());
             System.out.println("CATEGORIA: " + tournaments.getCategoriaTratamento());
             System.out.println("DESCRIÇÃO: " + tournaments.getDescricao());
