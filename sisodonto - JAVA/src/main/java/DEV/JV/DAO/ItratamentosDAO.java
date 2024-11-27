@@ -11,6 +11,6 @@ public interface ItratamentosDAO {
     tratamentosMODEL update (tratamentosMODEL tratamentos);
     void delete (int idTratamento);
     List<tratamentosMODEL> findAll();
-    Optional<tratamentosMODEL> findById (int idTratamento);
+    Optional<tratamentosMODEL> findById (Long idTratamento);
 
 }

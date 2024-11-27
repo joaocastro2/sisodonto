@@ -12,8 +12,7 @@ public class INSERTS_TRATAMENTS {
     public static void main(String[] args) {
 
         tratamentosDAO dao = new tratamentosDAO();
-        tratamentosMODEL tratamento = new tratamentosMODEL(null, tiposTratamento.APLICACAO, "APLICAÇÃO DE APARELHO ORTODONTICO", 180.0);
+        tratamentosMODEL tratamento = new tratamentosMODEL(null, tiposTratamento.CIRURGIA, "CANAL (COMPLETO)", 900.0);
         dao.save(tratamento);
-
     }
 }

@@ -73,7 +73,29 @@ public class tratamentosDAO implements ItratamentosDAO{
     }
 
     @Override
-    public Optional<tratamentosMODEL> findById(int idTratamento) {
-        return Optional.empty();
+    public Optional<tratamentosMODEL> findById(Long idTratamento) {
+
+        String sql = "SELECT * FROM tratamentos WHERE idTratamento = ?";
+
+        tratamentosMODEL tratamentos = null;
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, idTratamento);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Long idTratamento1 = rs.getLong("idTratamento");
+                tiposTratamento categoriaTratamento = tiposTratamento.valueOf(rs.getString("categoriaTratamento"));
+                String descricao = rs.getString("descricao");
+                Double custo = rs.getDouble("custo");
+
+                tratamentos = new tratamentosMODEL(idTratamento1, categoriaTratamento, descricao, custo);
+
+            }
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return Optional.ofNullable(tratamentos);
     }
 }
