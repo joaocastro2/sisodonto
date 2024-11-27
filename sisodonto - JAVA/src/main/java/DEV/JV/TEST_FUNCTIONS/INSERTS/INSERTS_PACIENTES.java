@@ -11,7 +11,7 @@ public class INSERTS_PACIENTES {
         //INSERE UM PACIENTE
         pacientesDAO insertPac = new pacientesDAO();
         pacientesMODEL pacientes = new pacientesMODEL("", "" ,
-                                                       LocalDate.of(2000, 01, 01), "", "",
+                                                       LocalDate.of(2006, 04, 21), "", "",
                                                        "", "", "");
 
         insertPac.save(pacientes);

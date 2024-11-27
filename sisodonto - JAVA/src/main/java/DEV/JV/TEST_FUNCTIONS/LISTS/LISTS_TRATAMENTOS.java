@@ -1,5 +1,6 @@
 package DEV.JV.TEST_FUNCTIONS.LISTS;
 
+import DEV.JV.CLASSES_ENUM.tiposTratamento;
 import DEV.JV.DAO.tratamentosDAO;
 import DEV.JV.MODEL.tratamentosMODEL;
 
@@ -21,13 +22,23 @@ public class LISTS_TRATAMENTOS {
 //            System.out.println("======================================================");
 //        }
 
-        Optional<tratamentosMODEL> tratamentos = dao.findById(1L);
+//        Optional<tratamentosMODEL> tratamentos = dao.findById(1L);
 
-        tratamentos.ifPresent(tratamentosMODEL -> {
-            System.out.println("ID: " + tratamentosMODEL.getIdTratamento());
-            System.out.println("CATEGORIA: " + tratamentosMODEL.getCategoriaTratamento());
-            System.out.println("DESC.: " + tratamentosMODEL.getDescricao());
-            System.out.println("CUSTO: " + tratamentosMODEL.getCusto());
-        });
+//        tratamentos.ifPresent(tratamentosMODEL -> {
+//            System.out.println("ID: " + tratamentosMODEL.getIdTratamento());
+//            System.out.println("CATEGORIA: " + tratamentosMODEL.getCategoriaTratamento());
+//            System.out.println("DESC.: " + tratamentosMODEL.getDescricao());
+//            System.out.println("CUSTO: " + tratamentosMODEL.getCusto());
+//        });
+
+        List<tratamentosMODEL> tratamentos = dao.findByCategoria(tiposTratamento.CIRURGIA);
+        for (tratamentosMODEL tournaments : tratamentos) {
+            System.out.println("ID: " + tournaments.getIdTratamento());
+            System.out.println("CATEGORIA: " + tournaments.getCategoriaTratamento());
+            System.out.println("DESCRIÇÃO: " + tournaments.getDescricao());
+            System.out.println("CUSTO: " + tournaments.getCusto());
+
+            System.out.println("======================================================");
+        }
     }
 }

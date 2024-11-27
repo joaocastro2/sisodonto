@@ -1,5 +1,6 @@
 package DEV.JV.DAO;
 
+import DEV.JV.CLASSES_ENUM.tiposTratamento;
 import DEV.JV.MODEL.tratamentosMODEL;
 
 import java.util.List;
@@ -12,5 +13,6 @@ public interface ItratamentosDAO {
     void delete (int idTratamento);
     List<tratamentosMODEL> findAll();
     Optional<tratamentosMODEL> findById (Long idTratamento);
+    List<tratamentosMODEL> findByCategoria(tiposTratamento categoria);
 
 }
