@@ -36,7 +36,21 @@ public class tratamentosDAO implements ItratamentosDAO{
 
     @Override
     public tratamentosMODEL update(tratamentosMODEL tratamentos) {
-        return null;
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            String sql = "UPDATE tratamentos SET categoriaTratamento = ?, descricao = ?, custo = ? WHERE idTratamento = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, tratamentos.getCategoriaTratamento().toString());
+            preparedStatement.setString(2, tratamentos.getDescricao());
+            preparedStatement.setDouble(3, tratamentos.getCusto());
+            preparedStatement.setLong(4, tratamentos.getIdTratamento());
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            throw new RuntimeException();
+        }
+        return tratamentos;
     }
 
     @Override
