@@ -54,8 +54,17 @@ public class tratamentosDAO implements ItratamentosDAO{
     }
 
     @Override
-    public void delete(int idTratamento) {
+    public void delete(Long idTratamento) {
+        try (Connection connection = ConnectionFactory.getConnection()){
+            String sql = "DELETE FROM tratamentos WHERE idTratamento = ?";
 
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, idTratamento);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
