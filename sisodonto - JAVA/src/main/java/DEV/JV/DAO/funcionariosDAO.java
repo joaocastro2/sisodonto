@@ -50,7 +50,7 @@ public class funcionariosDAO implements IfuncionariosDAO{
         try (Connection connection = ConnectionFactory.getConnection()){
             String sql = "UPDATE funcionarios SET cpfFuncionario = ?, nomeFuncionario = ?, setor = ?, telefone = ?, " +
                          "email = ?, cep = ?, endereco = ?, dataNascimento = ?, dataAdimissao = ?" +
-                         "WHERE idFuncionario = ?";
+                         "WHERE cpfFuncionario = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, funcionarios.getCpfFuncionario());
@@ -62,6 +62,7 @@ public class funcionariosDAO implements IfuncionariosDAO{
             preparedStatement.setString(7, funcionarios.getEndereco());
             preparedStatement.setDate(8, java.sql.Date.valueOf(funcionarios.getDataNascimento()));
             preparedStatement.setDate(9, java.sql.Date.valueOf(funcionarios.getDataAdimissao()));
+            preparedStatement.setString(10, funcionarios.getCpfFuncionario());
 
             preparedStatement.executeUpdate();
 

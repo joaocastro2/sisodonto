@@ -24,8 +24,8 @@ public class UPDATES_PACIENTES {
 
         //ALTERA ENDEREÇO DO CLIENTE
         //paciente.setEndereco("rua da abóbora");
-
-        pacientes.update(paciente);
+        //paciente.setCpfPaciente("11111111111");
+        //pacientes.update(paciente);
 
     }
 

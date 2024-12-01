@@ -1,22 +1,30 @@
 package DEV.JV.TEST_FUNCTIONS.UPDATES;
 
-import DEV.JV.CLASSES_ENUM.setores;
 import DEV.JV.DAO.funcionariosDAO;
 import DEV.JV.MODEL.funcionariosMODEL;
 
-import java.time.LocalDate;
+import java.util.Optional;
 
 public class UPDATES_FUNCIONARIOS {
 
     public static void main(String[] args) {
 
-        funcionariosDAO dao = new funcionariosDAO();
-        funcionariosMODEL funcionarios = new funcionariosMODEL(null, "66666666666", "josé pinto", setores.OUTROS,
-                                                               "0000000000", "teste@gmail.com", "88888888", "qd 8 lt 12 - aguas lindas",
-                                                               /* NASCIMENTO: */LocalDate.of(2024, 12, 01),
-                                                               /* ADIMISSÃO: */LocalDate.of(2024, 12, 01));
+        funcionariosDAO funcionarios = new funcionariosDAO();
+        Optional<funcionariosMODEL> funcionariosMODELOptional = funcionarios.findByCpf("33333333333");
 
-        dao.save(funcionarios);
+        funcionariosMODEL funcionario = funcionariosMODELOptional.get();
+        System.out.println("CPF: " + funcionario.getCpfFuncionario());
+        System.out.println("NOME: " + funcionario.getNomeFuncionario());
+        System.out.println("SETOR: " + funcionario.getSetor().toString());
+        System.out.println("TELEFONE: " + funcionario.getTelefone());
+        System.out.println("EMAIL: " + funcionario.getEmail());
+        System.out.println("CEP: " + funcionario.getCep());
+        System.out.println("ENDEREÇO" + funcionario.getEndereco());
+        System.out.println("NASC: " + funcionario.getDataNascimento());
+        System.out.println("ADIMISSÃO: " + funcionario.getDataAdimissao());
+
+        //funcionario.setNomeFuncionario("kg");
+        //funcionarios.update(funcionario);
 
     }
 
