@@ -1,0 +1,4 @@
+package DEV.JV.TEST_FUNCTIONS.DELETS;
+
+public class DELETS_FUNCIONARIOS {
+}
