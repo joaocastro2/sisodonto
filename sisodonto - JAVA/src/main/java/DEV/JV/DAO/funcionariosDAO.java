@@ -1,18 +1,15 @@
 package DEV.JV.DAO;
 
 import DEV.JV.CLASSES_ENUM.setores;
-import DEV.JV.CLASSES_ENUM.tiposTratamento;
 import DEV.JV.INFRA.ConnectionFactory;
 import DEV.JV.MODEL.funcionariosMODEL;
-import DEV.JV.MODEL.pacientesMODEL;
-import DEV.JV.MODEL.tratamentosMODEL;
 
-import java.lang.invoke.StringConcatFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,15 +71,48 @@ public class funcionariosDAO implements IfuncionariosDAO{
 
     @Override
     public void delete(String cpfFuncionario) {
+        try (Connection connection = ConnectionFactory.getConnection()){
+            String sql = "DELETE FROM funcionarios WHERE cpfFuncionario = ?";
 
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, cpfFuncionario);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
-    public List<tratamentosMODEL> findAll() {
+    public List<funcionariosMODEL> findAll() {
         String sql = "SELECT * FROM funcionarios";
 
+        List<funcionariosMODEL> funcionarios = new ArrayList<>();
 
-        return List.of();
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Long idFuncionario = rs.getLong("idFuncionario");
+                String cpfFunc = rs.getString("cpfFuncionario");
+                String nome = rs.getString("nomeFuncionario");
+                setores setor = setores.valueOf(rs.getString("setor"));
+                String telefone = rs.getString("telefone");
+                String email = rs.getString("email");
+                String cep = rs.getString("cep");
+                String endereco = rs.getString("endereco");
+                LocalDate dataNasc = rs.getDate("dataNascimento").toLocalDate();
+                LocalDate dataAdm = rs.getDate("dataAdimissao").toLocalDate();
+
+                funcionariosMODEL funcionario = new funcionariosMODEL(idFuncionario, cpfFunc, nome, setor, telefone, email, cep, endereco, dataNasc, dataAdm);
+                funcionarios.add(funcionario);
+            }
+        } catch (SQLException ex){
+            throw new RuntimeException();
+        }
+        return funcionarios;
     }
 
     @Override
