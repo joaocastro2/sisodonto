@@ -6,7 +6,10 @@ import DEV.JV.MODEL.funcionariosMODEL;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +47,28 @@ public class agendaDAO implements IagendaDAO{
 
     @Override
     public List<agendaMODEL> findAll() {
-        return List.of();
+        String sql = "SELECT * FROM agendas";
+
+        List<agendaMODEL> agendas = new ArrayList<>();
+
+        try(Connection connection = ConnectionFactory.getConnection()){
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Long idAgenda = rs.getLong("idAgenda");
+                String cpfFuncionario = rs.getString("fk_cpfFuncionario");
+                LocalDate inicioAgenda = rs.getDate("inicioAgenda").toLocalDate();
+
+                agendaMODEL agenda = new agendaMODEL(idAgenda, cpfFuncionario, inicioAgenda);
+                agendas.add(agenda);
+
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException();
+        }
+        return agendas;
     }
 
     @Override
