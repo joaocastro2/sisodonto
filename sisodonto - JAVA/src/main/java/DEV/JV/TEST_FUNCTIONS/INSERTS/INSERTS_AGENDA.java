@@ -10,7 +10,7 @@ public class INSERTS_AGENDA {
 
     public static void main(String[] args) {
         agendaDAO dao = new agendaDAO();
-        agendaMODEL agenda = new agendaMODEL(null, "----------", LocalDate.of(2024, 12, 03));
+        agendaMODEL agenda = new agendaMODEL(null, "66666666666", LocalDate.of(2024, 12, 04));
 
         dao.save(agenda);
     }

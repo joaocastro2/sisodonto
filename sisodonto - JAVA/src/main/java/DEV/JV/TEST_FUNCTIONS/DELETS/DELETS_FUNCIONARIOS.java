@@ -10,5 +10,4 @@ public class DELETS_FUNCIONARIOS {
         funcionariosDEL.delete("33333333333");
 
     }
-
 }

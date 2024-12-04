@@ -9,7 +9,7 @@ public interface IagendaDAO {
 
     agendaMODEL save(agendaMODEL agenda);
     agendaMODEL update(agendaMODEL agenda);
-    agendaMODEL delete(Long idAgenda);
+    void delete(Long idAgenda);
     List<agendaMODEL> findAll();
     Optional<agendaMODEL> findById(Long idAgenda);
 }
