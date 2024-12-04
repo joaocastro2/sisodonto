@@ -9,14 +9,16 @@ public class consultaMODEL {
     private String fk_cpfPaciente, fk_cpfFuncionario;
     private LocalDate dataConsulta;
     private LocalTime horaConsulta;
+    private boolean situacao;
 
-    public consultaMODEL(Long idConsulta, String fk_cpfPaciente, String fk_cpfFuncionario, LocalDate dataConsulta, LocalTime horaConsulta, Long fk_idTratamento) {
+    public consultaMODEL(Long idConsulta, String fk_cpfPaciente, String fk_cpfFuncionario, LocalDate dataConsulta, LocalTime horaConsulta, Long fk_idTratamento, boolean situacao) {
         this.idConsulta = idConsulta;
         this.fk_cpfPaciente = fk_cpfPaciente;
         this.fk_cpfFuncionario = fk_cpfFuncionario;
         this.dataConsulta = dataConsulta;
         this.horaConsulta = horaConsulta;
         this.fk_idTratamento = fk_idTratamento;
+        this.situacao = situacao;
     }
 
     public Long getIdConsulta() {
@@ -65,5 +67,13 @@ public class consultaMODEL {
 
     public void setHoraConsulta(LocalTime horaConsulta) {
         this.horaConsulta = horaConsulta;
+    }
+
+    public boolean getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(boolean situacao) {
+        this.situacao = situacao;
     }
 }

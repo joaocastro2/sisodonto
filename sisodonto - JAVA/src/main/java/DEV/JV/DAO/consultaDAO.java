@@ -12,8 +12,8 @@ import java.util.Optional;
 public class consultaDAO implements IconsultaDAO{
     @Override
     public consultaMODEL save(consultaMODEL consulta) {
-        String sql = "INSERT INTO consultas (fk_cpfPaciente, fk_cpfFuncionario, dataConsulta, horaConsulta, fk_idTratamento) " +
-                     "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO consultas (fk_cpfPaciente, fk_cpfFuncionario, dataConsulta, horaConsulta, fk_idTratamento, situacao) " +
+                     "VALUES (?, ?, ?, ?, ?, ?)";
 
         try(Connection connection = ConnectionFactory.getConnection()){
 
@@ -23,6 +23,7 @@ public class consultaDAO implements IconsultaDAO{
             preparedStatement.setDate(3, java.sql.Date.valueOf(consulta.getDataConsulta()));
             preparedStatement.setTime(4, java.sql.Time.valueOf(consulta.getHoraConsulta()));
             preparedStatement.setLong(5, consulta.getFk_idTratamento());
+            preparedStatement.setBoolean(6, consulta.getSituacao());
 
             preparedStatement.executeUpdate();
 
