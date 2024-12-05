@@ -64,7 +64,17 @@ public class consultaDAO implements IconsultaDAO{
 
     @Override
     public void delete(Long idConsulta) {
+        try(Connection connection = ConnectionFactory.getConnection()){
 
+            String sql = "DELETE FROM consultas WHERE idConsulta = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, idConsulta);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException ex){
+            throw new RuntimeException();
+        }
     }
 
     @Override
