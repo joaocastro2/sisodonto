@@ -40,7 +40,26 @@ public class consultaDAO implements IconsultaDAO{
 
     @Override
     public consultaMODEL update(consultaMODEL consulta) {
-        return null;
+        try(Connection connection = ConnectionFactory.getConnection()){
+
+            String sql = "UPDATE consultas SET fk_cpfPaciente = ?, fk_cpfFuncionario = ?, dataConsulta = ?, horaConsulta = ?, fk_idTratamento = ?, " +
+                         "situacao = ? WHERE idConsulta = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, consulta.getFk_cpfPaciente());
+            preparedStatement.setString(2, consulta.getFk_cpfFuncionario());
+            preparedStatement.setDate(3, java.sql.Date.valueOf(consulta.getDataConsulta()));
+            preparedStatement.setTime(4, java.sql.Time.valueOf(consulta.getHoraConsulta()));
+            preparedStatement.setLong(5, consulta.getFk_idTratamento());
+            preparedStatement.setBoolean(6, consulta.getSituacao());
+            preparedStatement.setLong(7, consulta.getIdConsulta());
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException exc){
+            throw new RuntimeException();
+        }
+        return consulta;
     }
 
     @Override
