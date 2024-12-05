@@ -81,6 +81,32 @@ public class consultaDAO implements IconsultaDAO{
 
     @Override
     public Optional<consultaMODEL> findById(Long idConsulta) {
-        return Optional.empty();
+        String sql = "SELECT * FROM consultas WHERE idConsulta = ?";
+
+        consultaMODEL consulta = null;
+
+        try(Connection connection = ConnectionFactory.getConnection()){
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, idConsulta);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()){
+                Long idConsulta1 = rs.getLong("idConsulta");
+                String cpfPac = rs.getString("fk_cpfPaciente");
+                String cpfFunc = rs.getString("fk_cpfFuncionario");
+                LocalDate dataConsulta = rs.getDate("dataConsulta").toLocalDate();
+                LocalTime horaConsulta = rs.getTime("horaConsulta").toLocalTime();
+                Long idTrat = rs.getLong("fk_idTratamento");
+                Boolean situacao1 = rs.getBoolean("situacao");
+
+                consulta = new consultaMODEL(idConsulta1, cpfPac, cpfFunc, dataConsulta, horaConsulta, idTrat, situacao1);
+
+            }
+        } catch (SQLException ex){
+            throw new RuntimeException();
+        }
+        return Optional.ofNullable(consulta);
     }
 }
