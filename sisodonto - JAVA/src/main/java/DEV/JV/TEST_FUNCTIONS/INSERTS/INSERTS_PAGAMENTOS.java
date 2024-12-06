@@ -1,0 +1,4 @@
+package DEV.JV.TEST_FUNCTIONS.INSERTS;
+
+public class INSERTS_PAGAMENTOS {
+}
