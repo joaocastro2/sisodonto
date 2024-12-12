@@ -7,13 +7,13 @@ import java.time.LocalDate;
 public class pagamentosMODEL {
 
     private Long idPagamento;
-    private String fk_idConsulta;
+    private Long fk_idConsulta;
     private LocalDate dataPagamento;
     private double valor;
     formasPagamento formaPagamento;
     private boolean situacao;
 
-    public pagamentosMODEL(Long idPagamento, String fk_idConsulta, LocalDate dataPagamento, double valor, formasPagamento formaPagamento, boolean situacao) {
+    public pagamentosMODEL(Long idPagamento, Long fk_idConsulta, LocalDate dataPagamento, double valor, formasPagamento formaPagamento, boolean situacao) {
         this.idPagamento = idPagamento;
         this.fk_idConsulta = fk_idConsulta;
         this.dataPagamento = dataPagamento;
@@ -26,11 +26,11 @@ public class pagamentosMODEL {
         return idPagamento;
     }
 
-    public String getFk_idConsulta() {
+    public Long getFk_idConsulta() {
         return fk_idConsulta;
     }
 
-    public void setFk_idConsulta(String fk_idConsulta) {
+    public void setFk_idConsulta(Long fk_idConsulta) {
         this.fk_idConsulta = fk_idConsulta;
     }
 

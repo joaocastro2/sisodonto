@@ -16,10 +16,10 @@ public class pagamentosDAO implements IpagamentosDAO {
         try (Connection connection = ConnectionFactory.getConnection()) {
 
             String sql = "INSERT INTO pagamentos (fk_idConsulta, dataPagamento, Valor, Forma_Pagamento, situação) " +
-                    "VALUES = (?, ?, ?, ?, ?)";
+                    "VALUES (?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, pagamentos.getFk_idConsulta());
+            preparedStatement.setLong(1, pagamentos.getFk_idConsulta());
             preparedStatement.setDate(2, java.sql.Date.valueOf(pagamentos.getDataPagamento()));
             preparedStatement.setDouble(3, pagamentos.getValor());
             preparedStatement.setString(4, pagamentos.getFormaPagamento().toString());
