@@ -9,7 +9,7 @@ public class INSERTS_PAGAMENTOS {
 
     public static void main(String[] args) {
         pagamentosDAO dao = new pagamentosDAO();
-        pagamentosMODEL pagamento = new pagamentosMODEL(null, 1L, LocalDate.of(2024, 12, 11),
+        pagamentosMODEL pagamento = new pagamentosMODEL(null, 2L, LocalDate.of(2024, 12, 11),
                                                          180.0, formasPagamento.DEBITO, true);
 
         dao.save(pagamento);

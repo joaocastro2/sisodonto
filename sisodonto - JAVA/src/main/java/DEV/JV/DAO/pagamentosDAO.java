@@ -38,13 +38,40 @@ public class pagamentosDAO implements IpagamentosDAO {
     }
 
     @Override
-    public pagamentosMODEL update(pagamentosMODEL pagamentosMODEL) {
-        return null;
+    public pagamentosMODEL update(pagamentosMODEL pagamentos) {
+
+        try(Connection connection = ConnectionFactory.getConnection()){
+
+            String sql =   "UPDATE pagamentos SET  fk_idConsulta = ?, dataPagamento = ?, Valor = ?, Forma_Pagamento = ?, situação";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, pagamentos.getFk_idConsulta());
+            preparedStatement.setDate(2, java.sql.Date.valueOf(pagamentos.getDataPagamento()));
+            preparedStatement.setDouble(3, pagamentos.getValor());
+            preparedStatement.setString(4, pagamentos.getFormaPagamento().toString());
+            preparedStatement.setBoolean(5, pagamentos.isSituacao());
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException ex){
+            throw new RuntimeException();
+        }
+
+        return pagamentos;
     }
 
     @Override
     public void delete(Long idPagamento) {
+        try (Connection connection = ConnectionFactory.getConnection()){
+            String sql = "DELETE FROM pagamentos WHERE idPagamento = ?";
 
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, idPagamento);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
