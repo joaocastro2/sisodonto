@@ -12,14 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Classe Data Access Object (DAO) para a tabela de pacientes.
+ */
 public class pacientesDAO implements IpacientesDAO {
 
+    /**
+     * Salva um novo paciente no banco de dados.
+     *
+     * @param pacientes Objeto pacientesMODEL contendo os dados do paciente a ser salvo.
+     * @return pacientesMODEL O objeto paciente após ser salvo no banco de dados.
+     */
     @Override
     public pacientesMODEL save(pacientesMODEL pacientes) {
-
         try (Connection connection = ConnectionFactory.getConnection()){
             String sql = "INSERT INTO pacientes (cpfPaciente, nomePaciente, nascimento, sexo, cep, endereço, telefone, email)" +
-                         " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, pacientes.getCpfPaciente());
@@ -39,12 +47,17 @@ public class pacientesDAO implements IpacientesDAO {
         return pacientes;
     }
 
+    /**
+     * Atualiza um paciente existente no banco de dados.
+     *
+     * @param pacientes Objeto pacientesMODEL contendo os dados atualizados do paciente.
+     * @return pacientesMODEL O objeto paciente após ser atualizado no banco de dados.
+     */
     @Override
     public pacientesMODEL update(pacientesMODEL pacientes) {
-
         try (Connection connection = ConnectionFactory.getConnection()){
             String sql = "UPDATE pacientes SET cpfPaciente = ?, nomePaciente = ?, nascimento = ?, sexo = ?, cep = ?" +
-                         ", endereço = ?, telefone = ?, email = ? WHERE cpfPaciente = ?;";
+                    ", endereço = ?, telefone = ?, email = ? WHERE cpfPaciente = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, pacientes.getCpfPaciente());
@@ -65,9 +78,13 @@ public class pacientesDAO implements IpacientesDAO {
         return pacientes;
     }
 
+    /**
+     * Deleta um paciente do banco de dados com base no CPF fornecido.
+     *
+     * @param cpfPaciente O CPF do paciente a ser deletado.
+     */
     @Override
     public void delete(String cpfPaciente) {
-
         try (Connection connection = ConnectionFactory.getConnection()){
             String sql = "DELETE FROM pacientes WHERE cpfPaciente = ?";
 
@@ -80,6 +97,11 @@ public class pacientesDAO implements IpacientesDAO {
         }
     }
 
+    /**
+     * Encontra todos os pacientes no banco de dados.
+     *
+     * @return List<pacientesMODEL> Uma lista contendo todos os pacientes encontrados.
+     */
     @Override
     public List<pacientesMODEL> findAll() {
         String sql = "SELECT * FROM pacientes";
@@ -88,7 +110,6 @@ public class pacientesDAO implements IpacientesDAO {
 
         try (Connection connection = ConnectionFactory.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -111,16 +132,20 @@ public class pacientesDAO implements IpacientesDAO {
         return pacientes;
     }
 
+    /**
+     * Encontra um paciente no banco de dados com base no CPF fornecido.
+     *
+     * @param cpfPaciente O CPF do paciente a ser encontrado.
+     * @return Optional<pacientesMODEL> Um objeto Optional contendo o paciente encontrado, se houver.
+     */
     @Override
     public Optional<pacientesMODEL> findByCpf(String cpfPaciente) {
-
         String sql = "SELECT * FROM pacientes WHERE cpfPaciente = ?";
 
         pacientesMODEL paciente = null;
         try (Connection connection = ConnectionFactory.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, cpfPaciente);
-
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {

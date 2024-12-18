@@ -3,7 +3,6 @@ package DEV.JV.DAO;
 import DEV.JV.INFRA.ConnectionFactory;
 import DEV.JV.MODEL.consultaMODEL;
 
-import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,13 +13,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class consultaDAO implements IconsultaDAO{
+/**
+ * Classe Data Access Object (DAO) para a tabela de consultas.
+ */
+public class consultaDAO implements IconsultaDAO {
+
+    /**
+     * Salva uma nova consulta no banco de dados.
+     *
+     * @param consulta Objeto consultaMODEL contendo os dados da consulta a ser salva.
+     * @return consultaMODEL O objeto consulta após ser salvo no banco de dados.
+     */
     @Override
     public consultaMODEL save(consultaMODEL consulta) {
         String sql = "INSERT INTO consultas (fk_cpfPaciente, fk_cpfFuncionario, dataConsulta, horaConsulta, fk_idTratamento, situacao) " +
-                     "VALUES (?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?)";
 
-        try(Connection connection = ConnectionFactory.getConnection()){
+        try (Connection connection = ConnectionFactory.getConnection()) {
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, consulta.getFk_cpfPaciente());
@@ -33,17 +42,23 @@ public class consultaDAO implements IconsultaDAO{
             preparedStatement.executeUpdate();
 
         } catch (SQLException ex) {
-            throw new RuntimeException();
+            throw new RuntimeException(ex);
         }
         return consulta;
     }
 
+    /**
+     * Atualiza uma consulta existente no banco de dados.
+     *
+     * @param consulta Objeto consultaMODEL contendo os dados atualizados da consulta.
+     * @return consultaMODEL O objeto consulta após ser atualizado no banco de dados.
+     */
     @Override
     public consultaMODEL update(consultaMODEL consulta) {
-        try(Connection connection = ConnectionFactory.getConnection()){
+        try (Connection connection = ConnectionFactory.getConnection()) {
 
             String sql = "UPDATE consultas SET fk_cpfPaciente = ?, fk_cpfFuncionario = ?, dataConsulta = ?, horaConsulta = ?, fk_idTratamento = ?, " +
-                         "situacao = ? WHERE idConsulta = ?";
+                    "situacao = ? WHERE idConsulta = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, consulta.getFk_cpfPaciente());
@@ -56,15 +71,20 @@ public class consultaDAO implements IconsultaDAO{
 
             preparedStatement.executeUpdate();
 
-        } catch (SQLException exc){
-            throw new RuntimeException();
+        } catch (SQLException exc) {
+            throw new RuntimeException(exc);
         }
         return consulta;
     }
 
+    /**
+     * Deleta uma consulta do banco de dados com base no ID fornecido.
+     *
+     * @param idConsulta O ID da consulta a ser deletada.
+     */
     @Override
     public void delete(Long idConsulta) {
-        try(Connection connection = ConnectionFactory.getConnection()){
+        try (Connection connection = ConnectionFactory.getConnection()) {
 
             String sql = "DELETE FROM consultas WHERE idConsulta = ?";
 
@@ -72,11 +92,16 @@ public class consultaDAO implements IconsultaDAO{
             preparedStatement.setLong(1, idConsulta);
             preparedStatement.executeUpdate();
 
-        } catch (SQLException ex){
-            throw new RuntimeException();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
+    /**
+     * Encontra todas as consultas no banco de dados.
+     *
+     * @return List<consultaMODEL> Uma lista contendo todas as consultas encontradas.
+     */
     @Override
     public List<consultaMODEL> findAll() {
 
@@ -84,12 +109,12 @@ public class consultaDAO implements IconsultaDAO{
 
         List<consultaMODEL> consulta = new ArrayList<>();
 
-        try(Connection connection = ConnectionFactory.getConnection()){
+        try (Connection connection = ConnectionFactory.getConnection()) {
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
                 Long idConsulta = rs.getLong("idConsulta");
                 String cpfPac = rs.getString("fk_cpfPaciente");
                 String cpfFunc = rs.getString("fk_cpfFuncionario");
@@ -102,26 +127,32 @@ public class consultaDAO implements IconsultaDAO{
                 consulta.add(consultas);
             }
 
-        } catch (SQLException ex){
-            throw new RuntimeException();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
         return consulta;
     }
 
+    /**
+     * Encontra uma consulta no banco de dados com base no ID fornecido.
+     *
+     * @param idConsulta O ID da consulta a ser encontrada.
+     * @return Optional<consultaMODEL> Um objeto Optional contendo a consulta encontrada, se houver.
+     */
     @Override
     public Optional<consultaMODEL> findById(Long idConsulta) {
         String sql = "SELECT * FROM consultas WHERE idConsulta = ?";
 
         consultaMODEL consulta = null;
 
-        try(Connection connection = ConnectionFactory.getConnection()){
+        try (Connection connection = ConnectionFactory.getConnection()) {
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setLong(1, idConsulta);
 
             ResultSet rs = preparedStatement.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
                 Long idConsulta1 = rs.getLong("idConsulta");
                 String cpfPac = rs.getString("fk_cpfPaciente");
                 String cpfFunc = rs.getString("fk_cpfFuncionario");
@@ -131,10 +162,9 @@ public class consultaDAO implements IconsultaDAO{
                 Boolean situacao1 = rs.getBoolean("situacao");
 
                 consulta = new consultaMODEL(idConsulta1, cpfPac, cpfFunc, dataConsulta, horaConsulta, idTrat, situacao1);
-
             }
-        } catch (SQLException ex){
-            throw new RuntimeException();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
         return Optional.ofNullable(consulta);
     }

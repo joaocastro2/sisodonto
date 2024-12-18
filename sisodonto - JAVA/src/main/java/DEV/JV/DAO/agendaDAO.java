@@ -12,9 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Classe Data Access Object (DAO) para a tabela de agendas.
+ */
 public class agendaDAO implements IagendaDAO{
 
-
+    /**
+     * Salva uma nova agenda no banco de dados.
+     *
+     * @param agenda Objeto agendaMODEL contendo os dados da agenda a ser salva.
+     * @return agendaMODEL O objeto agenda após ser salvo no banco de dados.
+     */
     @Override
     public agendaMODEL save(agendaMODEL agenda) {
         String sql = "INSERT INTO agendas (fk_cpfFuncionario, inicioAgenda) " +
@@ -34,6 +42,12 @@ public class agendaDAO implements IagendaDAO{
         return agenda;
     }
 
+    /**
+     * Atualiza uma agenda existente no banco de dados.
+     *
+     * @param agenda Objeto agendaMODEL contendo os dados atualizados da agenda.
+     * @return agendaMODEL O objeto agenda após ser atualizado no banco de dados.
+     */
     @Override
     public agendaMODEL update(agendaMODEL agenda) {
         try (Connection connection = ConnectionFactory.getConnection()) {
@@ -51,6 +65,11 @@ public class agendaDAO implements IagendaDAO{
         return agenda;
     }
 
+    /**
+     * Deleta uma agenda do banco de dados com base no ID fornecido.
+     *
+     * @param idAgenda O ID da agenda a ser deletada.
+     */
     @Override
     public void delete(Long idAgenda) {
         try (Connection connection = ConnectionFactory.getConnection()) {
@@ -64,6 +83,11 @@ public class agendaDAO implements IagendaDAO{
         }
     }
 
+    /**
+     * Encontra todas as agendas no banco de dados.
+     *
+     * @return List<agendaMODEL> Uma lista contendo todas as agendas encontradas.
+     */
     @Override
     public List<agendaMODEL> findAll() {
         String sql = "SELECT * FROM agendas";
@@ -90,6 +114,12 @@ public class agendaDAO implements IagendaDAO{
         return agendas;
     }
 
+    /**
+     * Encontra uma agenda no banco de dados com base no ID fornecido.
+     *
+     * @param idAgenda O ID da agenda a ser encontrada.
+     * @return Optional<agendaMODEL> Um objeto Optional contendo a agenda encontrada, se houver.
+     */
     @Override
     public Optional<agendaMODEL> findById(Long idAgenda) {
         String sql = "SELECT * FROM agendas WHERE idAgenda = ?";

@@ -13,13 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class funcionariosDAO implements IfuncionariosDAO{
+/**
+ * Classe Data Access Object (DAO) para a tabela de funcionários.
+ */
+public class funcionariosDAO implements IfuncionariosDAO {
 
-
+    /**
+     * Salva um novo funcionário no banco de dados.
+     *
+     * @param funcionarios Objeto funcionariosMODEL contendo os dados do funcionário a ser salvo.
+     * @return funcionariosMODEL O objeto funcionário após ser salvo no banco de dados.
+     */
     @Override
     public funcionariosMODEL save(funcionariosMODEL funcionarios) {
         String sql = "INSERT INTO funcionarios (cpfFuncionario, nomeFuncionario, setor, telefone, email, cep, endereco, dataNascimento, dataAdimissao)" +
-                                                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnectionFactory.getConnection()) {
 
@@ -42,12 +50,18 @@ public class funcionariosDAO implements IfuncionariosDAO{
         return funcionarios;
     }
 
+    /**
+     * Atualiza um funcionário existente no banco de dados.
+     *
+     * @param funcionarios Objeto funcionariosMODEL contendo os dados atualizados do funcionário.
+     * @return funcionariosMODEL O objeto funcionário após ser atualizado no banco de dados.
+     */
     @Override
     public funcionariosMODEL update(funcionariosMODEL funcionarios) {
         try (Connection connection = ConnectionFactory.getConnection()){
             String sql = "UPDATE funcionarios SET cpfFuncionario = ?, nomeFuncionario = ?, setor = ?, telefone = ?, " +
-                         "email = ?, cep = ?, endereco = ?, dataNascimento = ?, dataAdimissao = ?" +
-                         "WHERE cpfFuncionario = ?;";
+                    "email = ?, cep = ?, endereco = ?, dataNascimento = ?, dataAdimissao = ?" +
+                    "WHERE cpfFuncionario = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, funcionarios.getCpfFuncionario());
@@ -64,11 +78,16 @@ public class funcionariosDAO implements IfuncionariosDAO{
             preparedStatement.executeUpdate();
 
         } catch (SQLException ex){
-            throw new RuntimeException();
+            throw new RuntimeException(ex);
         }
         return funcionarios;
     }
 
+    /**
+     * Deleta um funcionário do banco de dados com base no CPF fornecido.
+     *
+     * @param cpfFuncionario O CPF do funcionário a ser deletado.
+     */
     @Override
     public void delete(String cpfFuncionario) {
         try (Connection connection = ConnectionFactory.getConnection()){
@@ -83,6 +102,11 @@ public class funcionariosDAO implements IfuncionariosDAO{
         }
     }
 
+    /**
+     * Encontra todos os funcionários no banco de dados.
+     *
+     * @return List<funcionariosMODEL> Uma lista contendo todos os funcionários encontrados.
+     */
     @Override
     public List<funcionariosMODEL> findAll() {
         String sql = "SELECT * FROM funcionarios";
@@ -110,11 +134,17 @@ public class funcionariosDAO implements IfuncionariosDAO{
                 funcionarios.add(funcionario);
             }
         } catch (SQLException ex){
-            throw new RuntimeException();
+            throw new RuntimeException(ex);
         }
         return funcionarios;
     }
 
+    /**
+     * Encontra um funcionário no banco de dados com base no CPF fornecido.
+     *
+     * @param cpfFuncionario O CPF do funcionário a ser encontrado.
+     * @return Optional<funcionariosMODEL> Um objeto Optional contendo o funcionário encontrado, se houver.
+     */
     @Override
     public Optional<funcionariosMODEL> findByCpf(String cpfFuncionario) {
         String sql = "SELECT * FROM funcionarios WHERE cpfFuncionario = ?";
@@ -142,7 +172,7 @@ public class funcionariosDAO implements IfuncionariosDAO{
                 funcionario = new funcionariosMODEL(idFuncionario, cpfFunc, nome, setor, telefone, email, cep, endereco, dataNasc, dataAdm);
             }
         } catch (SQLException ex){
-            throw new RuntimeException();
+            throw new RuntimeException(ex);
         }
         return Optional.ofNullable(funcionario);
     }

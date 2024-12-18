@@ -2,23 +2,31 @@ package DEV.JV.DAO;
 
 import DEV.JV.CLASSES_ENUM.tiposTratamento;
 import DEV.JV.INFRA.ConnectionFactory;
-import DEV.JV.MODEL.pacientesMODEL;
 import DEV.JV.MODEL.tratamentosMODEL;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class tratamentosDAO implements ItratamentosDAO{
+/**
+ * Classe Data Access Object (DAO) para a tabela de tratamentos.
+ * Implementa as operações CRUD (Create, Read, Update, Delete) definidas pela interface ItratamentosDAO.
+ */
+public class tratamentosDAO implements ItratamentosDAO {
 
+    /**
+     * Salva um novo tratamento no banco de dados.
+     *
+     * @param tratamentos Objeto tratamentosMODEL contendo os dados do tratamento a ser salvo.
+     * @return tratamentosMODEL O objeto tratamento após ser salvo no banco de dados.
+     */
     @Override
     public tratamentosMODEL save(tratamentosMODEL tratamentos) {
 
         try (Connection connection = ConnectionFactory.getConnection()) {
-            String sql = "INSERT INTO  tratamentos (categoriaTratamento, descricao, Custo)" +
-                                                     "VALUES (?, ?, ?)";
+            String sql = "INSERT INTO tratamentos (categoriaTratamento, descricao, custo)" +
+                    "VALUES (?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, tratamentos.getCategoriaTratamento().toString());
@@ -27,13 +35,19 @@ public class tratamentosDAO implements ItratamentosDAO{
 
             preparedStatement.executeUpdate();
 
-        } catch (SQLException ex){
-            throw new RuntimeException();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
 
         return tratamentos;
     }
 
+    /**
+     * Atualiza um tratamento existente no banco de dados.
+     *
+     * @param tratamentos Objeto tratamentosMODEL contendo os dados atualizados do tratamento.
+     * @return tratamentosMODEL O objeto tratamento após ser atualizado no banco de dados.
+     */
     @Override
     public tratamentosMODEL update(tratamentosMODEL tratamentos) {
         try (Connection connection = ConnectionFactory.getConnection()) {
@@ -48,14 +62,19 @@ public class tratamentosDAO implements ItratamentosDAO{
             preparedStatement.executeUpdate();
 
         } catch (SQLException ex) {
-            throw new RuntimeException();
+            throw new RuntimeException(ex);
         }
         return tratamentos;
     }
 
+    /**
+     * Deleta um tratamento do banco de dados com base no ID fornecido.
+     *
+     * @param idTratamento O ID do tratamento a ser deletado.
+     */
     @Override
     public void delete(Long idTratamento) {
-        try (Connection connection = ConnectionFactory.getConnection()){
+        try (Connection connection = ConnectionFactory.getConnection()) {
             String sql = "DELETE FROM tratamentos WHERE idTratamento = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -67,6 +86,11 @@ public class tratamentosDAO implements ItratamentosDAO{
         }
     }
 
+    /**
+     * Encontra todos os tratamentos no banco de dados.
+     *
+     * @return List<tratamentosMODEL> Uma lista contendo todos os tratamentos encontrados.
+     */
     @Override
     public List<tratamentosMODEL> findAll() {
         String sql = "SELECT * FROM tratamentos";
@@ -75,7 +99,6 @@ public class tratamentosDAO implements ItratamentosDAO{
 
         try (Connection connection = ConnectionFactory.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -86,7 +109,6 @@ public class tratamentosDAO implements ItratamentosDAO{
 
                 tratamentosMODEL tratamento = new tratamentosMODEL(idTratamento, categoriaTratamento, descricao, custo);
                 tratamentos.add(tratamento);
-
             }
 
         } catch (SQLException ex) {
@@ -95,6 +117,12 @@ public class tratamentosDAO implements ItratamentosDAO{
         return tratamentos;
     }
 
+    /**
+     * Encontra um tratamento no banco de dados com base no ID fornecido.
+     *
+     * @param idTratamento O ID do tratamento a ser encontrado.
+     * @return Optional<tratamentosMODEL> Um objeto Optional contendo o tratamento encontrado, se houver.
+     */
     @Override
     public Optional<tratamentosMODEL> findById(Long idTratamento) {
 
@@ -113,7 +141,6 @@ public class tratamentosDAO implements ItratamentosDAO{
                 Double custo = rs.getDouble("custo");
 
                 tratamentos = new tratamentosMODEL(idTratamento1, categoriaTratamento, descricao, custo);
-
             }
 
         } catch (SQLException ex) {
@@ -122,6 +149,12 @@ public class tratamentosDAO implements ItratamentosDAO{
         return Optional.ofNullable(tratamentos);
     }
 
+    /**
+     * Encontra tratamentos no banco de dados com base na categoria fornecida.
+     *
+     * @param categoria A categoria do tratamento a ser encontrada.
+     * @return List<tratamentosMODEL> Uma lista contendo todos os tratamentos encontrados na categoria fornecida.
+     */
     @Override
     public List<tratamentosMODEL> findByCategoria(tiposTratamento categoria) {
         String sql = "SELECT * FROM tratamentos WHERE categoriaTratamento = ?";
