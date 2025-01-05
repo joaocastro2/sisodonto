@@ -20,9 +20,9 @@ public class INSERTS_PACIENTES {
         pacientesDAO insertPac = new pacientesDAO();
 
         // Cria uma nova instancia de pacientesMODEL.
-        pacientesMODEL pacientes = new pacientesMODEL("78641646", "",
-                LocalDate.of(2006, 04, 21), "", "",
-                "", "", "");
+        pacientesMODEL pacientes = new pacientesMODEL("0000000000", "",
+                LocalDate.of(2006, 04, 21), "F", "88888888",
+                "RUA DA AGUA", "66666666666", "LINDA@GMAIL.COM");
 
         // Salva o novo paciente no banco de dados.
         insertPac.save(pacientes);

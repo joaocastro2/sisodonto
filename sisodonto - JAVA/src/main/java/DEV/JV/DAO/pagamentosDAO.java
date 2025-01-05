@@ -41,7 +41,6 @@ public class pagamentosDAO implements IpagamentosDAO {
             preparedStatement.setBoolean(5, pagamentos.isSituacao());
 
             preparedStatement.executeUpdate();
-
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
@@ -106,7 +105,6 @@ public class pagamentosDAO implements IpagamentosDAO {
     public List<pagamentosMODEL> findAll() {
 
         List<pagamentosMODEL> pagamentos = new ArrayList<>();
-
         try (Connection connection = ConnectionFactory.getConnection()) {
 
             String sql  = "SELECT * FROM pagamentos";
